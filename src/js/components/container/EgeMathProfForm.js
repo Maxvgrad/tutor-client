@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import QuestionInput from "../element/QuestionInput";
+import axios from 'axios';
 
 class EgeMathProfForm extends React.Component {
   constructor(props) {
@@ -24,8 +25,19 @@ class EgeMathProfForm extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state);
     event.preventDefault();
+
+    console.log(this.state);
+    const form = this.state;
+
+    const instance = axios.create({
+        baseURL: 'https://some-domain.com/api/',
+        timeout: 1000,
+        headers: {'Access-Control-Allow-Origin': '*'}
+    });
+
+    instance.put('http://localhost:8099/api/v3/tutor/examination/assessment/ege/math/prof', form)
+      .then(res => console.log(res.data));
   }
 
   render() {
